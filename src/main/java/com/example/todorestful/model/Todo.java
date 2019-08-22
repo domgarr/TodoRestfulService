@@ -1,17 +1,25 @@
 package com.example.todorestful.model;
 
+import javax.persistence.Entity;
+
 public class Todo {
 	private Integer id;
 	private String description;
 	boolean isDone;
 	
-	public Todo(String description, boolean isDone) {
+	public Todo() {
+		
+	}
+	
+	public Todo(Integer id, String description, boolean isDone) {
+		this.id = id;
 		this.description = description;
 		this.isDone = isDone;
 	}
 	
-	public Todo() {
-	
+	public Todo(String description, boolean isDone) {
+		this.description = description;
+		this.isDone = isDone;
 	}
 
 	public Integer getId() {
@@ -37,6 +45,8 @@ public class Todo {
 	public void setDone(boolean isDone) {
 		this.isDone = isDone;
 	}
+	
+	
 	
 	
 }
