@@ -7,7 +7,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.example.todorestful.model.Todo;
@@ -25,6 +27,13 @@ public class JdbcTodoDAO implements TodoDAO {
 	private JdbcTemplate jdbcTemplate;
 	private SimpleJdbcInsert jdbcInsert;
 	
+	private RowMapper<Todo> todoMapper = (rs, rowNum) -> new Todo(
+			rs.getInt("todo_id"),
+			rs.getInt("list_id"),
+			rs.getString("description"),
+			rs.getBoolean("is_done")
+			);
+	
 	@Autowired
 	public JdbcTodoDAO(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
@@ -39,6 +48,7 @@ public class JdbcTodoDAO implements TodoDAO {
 		Map<String, Object> parameters = new HashMap<>();
 		parameters.put("description", todo.getDescription());
 		parameters.put("is_done", todo.isDone());
+		parameters.put("list_id", todo.getListId());
 	
 		Number generatedId =  jdbcInsert.executeAndReturnKey(parameters);
 		todo.setId(generatedId.intValue());
@@ -60,6 +70,7 @@ public class JdbcTodoDAO implements TodoDAO {
 		return Optional.ofNullable(jdbcTemplate.queryForObject(
 				"SELECT * FROM todos WHERE todo_id=?", 
 				(rs,rowNum) -> new Todo( rs.getInt("todo_id"),
+					rs.getInt("list_id"),
 					rs.getString("description"),
 					rs.getBoolean("is_done")),
 				id
@@ -92,6 +103,11 @@ public class JdbcTodoDAO implements TodoDAO {
 	public void updateIsDone(Todo todo) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<Todo> findAllByListId(Integer id) {
+		return jdbcTemplate.query("SELECT * FROM todos WHERE list_id=?", todoMapper ,id);
 	}
 	
 }

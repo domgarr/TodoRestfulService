@@ -18,4 +18,5 @@ public interface TodoDAO {
 	boolean existsById(Integer id);
 	void updateDescription(Todo todo);
 	void updateIsDone(Todo todo);
+	List<Todo> findAllByListId(Integer id);
 }

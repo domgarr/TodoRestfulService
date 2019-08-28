@@ -3,8 +3,10 @@ package com.example.todorestful;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,19 +15,33 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.todorestful.dao.JdbcTodoDAO;
+import com.example.todorestful.dao.JdbcTodoListDAO;
 import com.example.todorestful.model.Todo;
+import com.example.todorestful.model.TodoList;
 
-@RunWith(SpringRunner.class)
-@Transactional
-@SpringBootTest
-public class TestTodoDAO {
+
+public class TestTodoDAO extends TodoRestfulApplicationTests {
+	Integer listId;
+	
 	@Autowired
 	JdbcTodoDAO todoDAO;
+	@Autowired
+	JdbcTodoListDAO todoListDAO;
+	
+	@Before
+	public void saveTodoList() {
+		TodoList todoList = new TodoList();
+		todoList.setDescription("Morning routine");
+		todoList.setUserId(1);
+		TodoList savedTodoList = todoListDAO.save(todoList);
+		listId = savedTodoList.getId();
+	}
 	
 	@Test 
 	public void testSave() {
 		Todo todo = new Todo();
 		todo.setDescription("Get er done");
+		todo.setListId(listId);
 		
 		Todo savedTodo = todoDAO.save(todo);
 		assertNotNull(savedTodo.getId());
@@ -35,6 +51,8 @@ public class TestTodoDAO {
 	public void testTodoIsDoneDefaultValue() {
 		Todo todo = new Todo();
 		todo.setDescription("Test1");
+		todo.setListId(listId);
+
 		
 		Todo savedTodo = todoDAO.save(todo);
 		
@@ -50,6 +68,8 @@ public class TestTodoDAO {
 		Todo todo = new Todo();
 		todo.setDescription("Get er done");
 		todo.setDone(true);
+		todo.setListId(listId);
+
 		
 		Todo savedTodo = todoDAO.save(todo);
 		
@@ -64,6 +84,8 @@ public class TestTodoDAO {
 		Todo todo = new Todo();
 		todo.setDescription("Get er done");
 		todo.setDone(true);
+		todo.setListId(listId);
+
 		
 		Todo savedTodo = todoDAO.save(todo);
 		todoDAO.delete(savedTodo);
@@ -75,10 +97,12 @@ public class TestTodoDAO {
 		Todo todo = new Todo();
 		todo.setDescription("Get er done");
 		todo.setDone(true);
+		todo.setListId(listId);
+
 		
 		Todo savedTodo = todoDAO.save(todo);
-		todo.setDescription("update");
-		todoDAO.updateDescription(todo);
+		savedTodo.setDescription("update");
+		todoDAO.updateDescription(savedTodo);
 		
 		Optional<Todo> optionalTodo = todoDAO.findById(savedTodo.getId());
 		Todo fetchedTodo = optionalTodo.get();
@@ -91,6 +115,8 @@ public class TestTodoDAO {
 	public void testUpdateIsDone() {
 		Todo todo = new Todo();
 		todo.setDescription("Get er done");
+		todo.setListId(listId);
+
 		
 		Todo savedTodo = todoDAO.save(todo);
 		todo.setDescription("update");
@@ -101,13 +127,39 @@ public class TestTodoDAO {
 		Optional<Todo> optionalTodo = todoDAO.findById(savedTodo.getId());
 		Todo fetchedTodo = optionalTodo.get();
 		assertEquals(true, fetchedTodo.getDescription());
-
-	
 	}
 	
 	@Test
 	public void testCount() {
-		assertEquals(11, todoDAO.count());
+		Todo todo = new Todo();
+		todo.setDescription("Get er done");
+		todo.setDone(true);
+		todo.setListId(listId);
 
+		todoDAO.save(todo);
+		
+		assertEquals(1, todoDAO.count());
 	}
+	
+	@Test
+	public void testFindAllByListId() {
+		Todo todo1 = new Todo();
+		todo1.setDescription("Drink cup of water");
+		todo1.setListId(listId);
+		
+		todoDAO.save(todo1);
+		
+		Todo todo2 = new Todo();
+		todo2.setDescription("Make coffee");
+		todo2.setListId(listId);
+		
+		todoDAO.save(todo2);
+		
+		ArrayList<Todo> todos = (ArrayList)todoDAO.findAllByListId(listId);
+		
+		assertEquals("Drink cup of water", todos.get(0).getDescription());
+		assertEquals("Make coffee", todos.get(1).getDescription());
+	}
+	
+	
 }
