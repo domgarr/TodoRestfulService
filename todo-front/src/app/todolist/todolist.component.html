@@ -1,0 +1,13 @@
+
+  <p> Morning Routine </p>
+  <form>
+  <div class="row">
+      <div class="row-8">
+        <input type = "text" class="form-control" placeholder="Enter" />
+      </div>
+      <div class="row-4">
+        <button type="button" class="btn btn-success">Add</button>
+      </div>
+    </div>
+  </form>
+  <app-todo *ngFor="let todo of todos" [todo]="todo"> </app-todo>
