@@ -15,44 +15,47 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
  * For now, using Json Property twice does the job. 
  */
 
-public class Todo {
+public class Task {
 	
-	@JsonProperty("todoId") //By using JSONPropery here, I can customize the field name. Without todoId would be Id
-	private Integer todoId;
+	@JsonProperty("taskId") //By using JSONPropery here, I can customize the field name. Without todoId would be Id
+	private Integer taskId;
+	
 	private Integer listId;
+	
 	private String description;
+	
 	@JsonProperty("isDone")
 	private boolean isDone;
 	
-	public Todo() {
+	public Task() {
 		
 	}
-	public Todo(String description, boolean isDone) {
+	public Task(String description, boolean isDone) {
 		this.description = description;
 		this.isDone = isDone;
 	}
 	
-	public Todo(Integer userId, Integer listId, String description) {
-		this.todoId = userId;
+	public Task(Integer userId, Integer listId, String description) {
+		this.taskId = userId;
 		this.listId = listId;
 		this.description = description;
 	}
 	
-	public Todo(Integer userId, Integer listId, String description, boolean isDone) {
-		this.todoId = userId;
+	public Task(Integer userId, Integer listId, String description, boolean isDone) {
+		this.taskId = userId;
 		this.listId = listId;
 		this.description = description;
 		this.isDone = isDone;
 	}
 	
 	//If JsonProperty isn't added to the getter, there will be duplicate 
-	@JsonProperty("todoId")
+	@JsonProperty("taskId")
 	public Integer getId() {
-		return todoId;
+		return taskId;
 	}
 	
 	public void setId(Integer id) {
-		this.todoId = id;
+		this.taskId = id;
 	}
 	
 	public Integer getListId() {

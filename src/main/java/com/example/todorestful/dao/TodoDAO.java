@@ -5,18 +5,18 @@ import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.example.todorestful.model.Todo;
+import com.example.todorestful.model.Task;
 
 public interface TodoDAO {
 	final static String TABLE_NAME = "todos";
 	
-	Todo save(Todo todo);
-	Optional<Todo> findById(Integer id);
-	List<Todo> findAll();
+	Task save(Task todo);
+	Optional<Task> findById(Integer id);
+	List<Task> findAll();
 	long count();
-	void delete(Todo todo);
+	void delete(Task todo);
 	boolean existsById(Integer id);
-	void updateDescription(Todo todo);
-	void updateIsDone(Todo todo);
-	List<Todo> findAllByListId(Integer id);
+	void updateDescription(Task todo);
+	void updateIsDone(Task todo);
+	List<Task> findAllByListId(Integer id);
 }

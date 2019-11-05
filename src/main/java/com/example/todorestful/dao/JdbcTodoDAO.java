@@ -12,7 +12,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import com.example.todorestful.model.Todo;
+import com.example.todorestful.model.Task;
 
 @Repository
 public class JdbcTodoDAO implements TodoDAO {
@@ -27,7 +27,7 @@ public class JdbcTodoDAO implements TodoDAO {
 	private JdbcTemplate jdbcTemplate;
 	private SimpleJdbcInsert jdbcInsert;
 	
-	private RowMapper<Todo> todoMapper = (rs, rowNum) -> new Todo(
+	private RowMapper<Task> todoMapper = (rs, rowNum) -> new Task(
 			rs.getInt("todo_id"),
 			rs.getInt("list_id"),
 			rs.getString("description"),
@@ -44,7 +44,7 @@ public class JdbcTodoDAO implements TodoDAO {
 	}
 	
 	@Override
-	public Todo save(Todo todo) {
+	public Task save(Task todo) {
 		Map<String, Object> parameters = new HashMap<>();
 		parameters.put("description", todo.getDescription());
 		parameters.put("is_done", todo.isDone());
@@ -57,19 +57,19 @@ public class JdbcTodoDAO implements TodoDAO {
 	}
 
 	@Override
-	public void delete(Todo todo) {
+	public void delete(Task todo) {
 		jdbcTemplate.update("DELETE FROM todos WHERE todo_id=?", todo.getId());
 	}
 
 	@Override
-	public Optional<Todo> findById(Integer id) {
+	public Optional<Task> findById(Integer id) {
 		/*
 		 * Query for object is expecting 1 row, no more or less. In the case where just one row isn't retrieved 
 		 * and exception is thrown. 
 		 */
 		return Optional.ofNullable(jdbcTemplate.queryForObject(
 				"SELECT * FROM todos WHERE todo_id=?", 
-				(rs,rowNum) -> new Todo( rs.getInt("todo_id"),
+				(rs,rowNum) -> new Task( rs.getInt("todo_id"),
 					rs.getInt("list_id"),
 					rs.getString("description"),
 					rs.getBoolean("is_done")),
@@ -78,7 +78,7 @@ public class JdbcTodoDAO implements TodoDAO {
 	}
 
 	@Override
-	public List<Todo> findAll() {
+	public List<Task> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -94,19 +94,19 @@ public class JdbcTodoDAO implements TodoDAO {
 	}
 
 	@Override
-	public void updateDescription(Todo todo) {
+	public void updateDescription(Task todo) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateIsDone(Todo todo) {
+	public void updateIsDone(Task todo) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public List<Todo> findAllByListId(Integer id) {
+	public List<Task> findAllByListId(Integer id) {
 		return jdbcTemplate.query("SELECT * FROM todos WHERE list_id=?", todoMapper ,id);
 	}
 	

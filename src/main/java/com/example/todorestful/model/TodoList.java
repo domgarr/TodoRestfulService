@@ -9,7 +9,7 @@ public class TodoList {
 	private Integer id;
 	private Integer userId;
 	private String description;
-	private List<Todo> todos;
+	private List<Task> todos;
 	
 	
 	
@@ -36,10 +36,10 @@ public class TodoList {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public List<Todo> getTodos() {
+	public List<Task> getTodos() {
 		return todos;
 	}
-	public void setTodos(List<Todo> todos) {
+	public void setTodos(List<Task> todos) {
 		this.todos = todos;
 	}
 	
