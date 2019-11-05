@@ -39,7 +39,7 @@ public class JdbcTodoDAO implements TodoDAO {
 		this.jdbcTemplate = jdbcTemplate;
 		this.jdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
 				.withTableName("todos")
-				.usingGeneratedKeyColumns("id");
+				.usingGeneratedKeyColumns("user_id");
 				
 	}
 	

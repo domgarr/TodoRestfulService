@@ -1,11 +1,27 @@
 package com.example.todorestful.model;
 
-import javax.persistence.Entity;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+
+/*
+ * Jackson by default uses getters/setter and fields to serialize and deserialize to Json. That
+ * is why if I used JsonProperty only on a field and not the getter/setter I was getting duplicate fields in the Json Response.
+ * 
+ * Look into making a global statement to override the default?
+ * https://stackoverflow.com/questions/7105745/how-to-specify-jackson-to-only-use-fields-preferably-globally
+ * 
+ * For now, using Json Property twice does the job. 
+ */
 
 public class Todo {
-	private Integer id;
+	
+	@JsonProperty("todoId") //By using JSONPropery here, I can customize the field name. Without todoId would be Id
+	private Integer todoId;
 	private Integer listId;
 	private String description;
+	@JsonProperty("isDone")
 	private boolean isDone;
 	
 	public Todo() {
@@ -16,27 +32,27 @@ public class Todo {
 		this.isDone = isDone;
 	}
 	
-	public Todo(Integer id, Integer listId, String description) {
-		this.id = id;
+	public Todo(Integer userId, Integer listId, String description) {
+		this.todoId = userId;
 		this.listId = listId;
 		this.description = description;
 	}
 	
-	public Todo(Integer id, Integer listId, String description, boolean isDone) {
-		this.id = id;
+	public Todo(Integer userId, Integer listId, String description, boolean isDone) {
+		this.todoId = userId;
 		this.listId = listId;
 		this.description = description;
 		this.isDone = isDone;
 	}
 	
-
-
+	//If JsonProperty isn't added to the getter, there will be duplicate 
+	@JsonProperty("todoId")
 	public Integer getId() {
-		return id;
+		return todoId;
 	}
 	
 	public void setId(Integer id) {
-		this.id = id;
+		this.todoId = id;
 	}
 	
 	public Integer getListId() {
@@ -55,6 +71,7 @@ public class Todo {
 		this.description = description;
 	}
 	
+	@JsonProperty("isDone")
 	public boolean isDone() {
 		return isDone;
 	}
