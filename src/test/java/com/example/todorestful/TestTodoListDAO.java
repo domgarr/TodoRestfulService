@@ -28,7 +28,7 @@ public class TestTodoListDAO extends TodoRestfulApplicationTests {
 	public void testTodoListSave() {
 		TodoList todoList = new TodoList();
 		todoList.setDescription("Morning Routine");
-		todoList.setUserId(1);
+		todoList.setUserId((long)1);
 		
 		TodoList savedTodoList = todoListDAO.save(todoList);
 		

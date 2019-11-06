@@ -11,12 +11,12 @@ public interface TodoDAO {
 	final static String TABLE_NAME = "todos";
 	
 	Task save(Task todo);
-	Optional<Task> findById(Integer id);
+	Optional<Task> findById(Long id);
 	List<Task> findAll();
 	long count();
-	void delete(Task todo);
-	boolean existsById(Integer id);
+	void delete(Long id);
+	boolean existsById(Long id);
 	void updateDescription(Task todo);
 	void updateIsDone(Task todo);
-	List<Task> findAllByListId(Integer id);
+	List<Task> findAllByListId(Long id);
 }

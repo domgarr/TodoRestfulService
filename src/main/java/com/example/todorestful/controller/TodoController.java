@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +31,7 @@ public class TodoController {
 	}
 	
 	@GetMapping("/todos/{list_id}")
-	public List<Task> findAllTodosByListId(@PathVariable("list_id") Integer listId) {
+	public List<Task> findAllTodosByListId(@PathVariable("list_id") Long listId) {
 		return todoDAO.findAllByListId(listId);
 		
 	}
@@ -40,6 +41,10 @@ public class TodoController {
 		return todoDAO.save(newTask);
 	}
 	
+	@DeleteMapping("/todos/{id}")
+	public void deleteTask(@PathVariable Long id) {
+		todoDAO.delete(id);
+	}
 	
 
 }

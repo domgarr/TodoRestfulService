@@ -6,30 +6,30 @@ import java.util.List;
 
 
 public class TodoList {
-	private Integer id;
-	private Integer userId;
+	private Long id;
+	private Long userId;
 	private String description;
 	private List<Task> todos;
 	
-	
-	
 	public TodoList() {
 	}
-	public Integer getId() {
+	
+	public Long getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	
+	public void setId(Long id) {
 		this.id = id;
 	}
 	
 	
-	
-	public Integer getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
-	public void setUserId(Integer userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
+	
 	public String getDescription() {
 		return description;
 	}

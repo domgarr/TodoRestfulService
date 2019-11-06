@@ -28,8 +28,8 @@ public class JdbcTodoDAO implements TodoDAO {
 	private SimpleJdbcInsert jdbcInsert;
 	
 	private RowMapper<Task> todoMapper = (rs, rowNum) -> new Task(
-			rs.getInt("todo_id"),
-			rs.getInt("list_id"),
+			rs.getLong("todo_id"),
+			rs.getLong("list_id"),
 			rs.getString("description"),
 			rs.getBoolean("is_done")
 			);
@@ -51,26 +51,26 @@ public class JdbcTodoDAO implements TodoDAO {
 		parameters.put("list_id", todo.getListId());
 	
 		Number generatedId =  jdbcInsert.executeAndReturnKey(parameters);
-		todo.setId(generatedId.intValue());
+		todo.setId(generatedId.longValue());
 		
 		return todo;
 	}
 
 	@Override
-	public void delete(Task todo) {
-		jdbcTemplate.update("DELETE FROM todos WHERE todo_id=?", todo.getId());
+	public void delete(Long id) {
+		jdbcTemplate.update("DELETE FROM todos WHERE todo_id=?", id);
 	}
 
 	@Override
-	public Optional<Task> findById(Integer id) {
+	public Optional<Task> findById(Long id) {
 		/*
 		 * Query for object is expecting 1 row, no more or less. In the case where just one row isn't retrieved 
 		 * and exception is thrown. 
 		 */
 		return Optional.ofNullable(jdbcTemplate.queryForObject(
 				"SELECT * FROM todos WHERE todo_id=?", 
-				(rs,rowNum) -> new Task( rs.getInt("todo_id"),
-					rs.getInt("list_id"),
+				(rs,rowNum) -> new Task( rs.getLong("todo_id"),
+					rs.getLong("list_id"),
 					rs.getString("description"),
 					rs.getBoolean("is_done")),
 				id
@@ -89,7 +89,7 @@ public class JdbcTodoDAO implements TodoDAO {
 	}
 
 	@Override
-	public boolean existsById(Integer id) {
+	public boolean existsById(Long id) {
 		return jdbcTemplate.queryForObject("SELECT EXISTS(SELECT 1 FROM todos WHERE todo_id=?)", Boolean.class, id);
 	}
 
@@ -106,7 +106,7 @@ public class JdbcTodoDAO implements TodoDAO {
 	}
 
 	@Override
-	public List<Task> findAllByListId(Integer id) {
+	public List<Task> findAllByListId(Long id) {
 		return jdbcTemplate.query("SELECT * FROM todos WHERE list_id=?", todoMapper ,id);
 	}
 	

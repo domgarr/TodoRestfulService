@@ -33,7 +33,7 @@ public class JdbcTodoListDAO implements TodoListDAO {
 		parameters.put("description", entity.getDescription());
 		parameters.put("user_id", entity.getUserId());
 		
-		Integer newId = jdbcInsert.executeAndReturnKey(parameters).intValue();
+		Long newId = jdbcInsert.executeAndReturnKey(parameters).longValue();
 		entity.setId(newId);
 		return entity;
 	}

@@ -18,9 +18,9 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 public class Task {
 	
 	@JsonProperty("taskId") //By using JSONPropery here, I can customize the field name. Without todoId would be Id
-	private Integer taskId;
+	private Long taskId;
 	
-	private Integer listId;
+	private Long listId;
 	
 	private String description;
 	
@@ -35,13 +35,13 @@ public class Task {
 		this.isDone = isDone;
 	}
 	
-	public Task(Integer userId, Integer listId, String description) {
+	public Task(Long userId, Long listId, String description) {
 		this.taskId = userId;
 		this.listId = listId;
 		this.description = description;
 	}
 	
-	public Task(Integer userId, Integer listId, String description, boolean isDone) {
+	public Task(Long userId, Long listId, String description, boolean isDone) {
 		this.taskId = userId;
 		this.listId = listId;
 		this.description = description;
@@ -50,19 +50,19 @@ public class Task {
 	
 	//If JsonProperty isn't added to the getter, there will be duplicate 
 	@JsonProperty("taskId")
-	public Integer getId() {
+	public Long getId() {
 		return taskId;
 	}
 	
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.taskId = id;
 	}
 	
-	public Integer getListId() {
+	public Long getListId() {
 		return listId;
 	}
 
-	public void setListId(Integer listId) {
+	public void setListId(Long listId) {
 		this.listId = listId;
 	}
 	

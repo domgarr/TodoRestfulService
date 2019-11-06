@@ -21,7 +21,7 @@ import com.example.todorestful.model.TodoList;
 
 
 public class TestTodoDAO extends TodoRestfulApplicationTests {
-	Integer listId;
+	Long listId;
 	
 	@Autowired
 	JdbcTodoDAO todoDAO;
@@ -32,7 +32,7 @@ public class TestTodoDAO extends TodoRestfulApplicationTests {
 	public void saveTodoList() {
 		TodoList todoList = new TodoList();
 		todoList.setDescription("Morning routine");
-		todoList.setUserId(1);
+		todoList.setUserId((long)1);
 		TodoList savedTodoList = todoListDAO.save(todoList);
 		listId = savedTodoList.getId();
 	}
@@ -88,7 +88,7 @@ public class TestTodoDAO extends TodoRestfulApplicationTests {
 
 		
 		Task savedTodo = todoDAO.save(todo);
-		todoDAO.delete(savedTodo);
+		todoDAO.delete(savedTodo.getId());
 		assertEquals(false, todoDAO.existsById(savedTodo.getId()));
 	}
 	
