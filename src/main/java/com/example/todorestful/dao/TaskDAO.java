@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.example.todorestful.model.Task;
 
-public interface TodoDAO {
+public interface TaskDAO {
 	final static String TABLE_NAME = "todos";
 	
 	Task save(Task todo);

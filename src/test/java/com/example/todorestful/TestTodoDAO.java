@@ -14,27 +14,27 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.todorestful.dao.JdbcTodoDAO;
-import com.example.todorestful.dao.JdbcTodoListDAO;
+import com.example.todorestful.dao.JdbcTaskDAO;
+import com.example.todorestful.dao.JdbcTaskListDAO;
 import com.example.todorestful.model.Task;
-import com.example.todorestful.model.TodoList;
+import com.example.todorestful.model.TaskList;
 
 
 public class TestTodoDAO extends TodoRestfulApplicationTests {
 	Long listId;
 	
 	@Autowired
-	JdbcTodoDAO todoDAO;
+	JdbcTaskDAO todoDAO;
 	@Autowired
-	JdbcTodoListDAO todoListDAO;
+	JdbcTaskListDAO todoListDAO;
 	
 	@Before
 	public void saveTodoList() {
-		TodoList todoList = new TodoList();
-		todoList.setDescription("Morning routine");
+		TaskList todoList = new TaskList();
+		todoList.setName("Morning routine");
 		todoList.setUserId((long)1);
-		TodoList savedTodoList = todoListDAO.save(todoList);
-		listId = savedTodoList.getId();
+		TaskList savedTodoList = todoListDAO.save(todoList);
+		listId = savedTodoList.getListId();
 	}
 	
 	@Test 

@@ -10,9 +10,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.todorestful.dao.JdbcTodoListDAO;
-import com.example.todorestful.dao.TodoListDAO;
-import com.example.todorestful.model.TodoList;
+import com.example.todorestful.dao.JdbcTaskListDAO;
+import com.example.todorestful.dao.TaskListDAO;
+import com.example.todorestful.model.TaskList;
 
 
 
@@ -22,17 +22,17 @@ import com.example.todorestful.model.TodoList;
 public class TestTodoListDAO extends TodoRestfulApplicationTests {
 	
 	@Autowired
-	TodoListDAO todoListDAO;
+	TaskListDAO todoListDAO;
 	
 	@Test
 	public void testTodoListSave() {
-		TodoList todoList = new TodoList();
-		todoList.setDescription("Morning Routine");
+		TaskList todoList = new TaskList();
+		todoList.setName("Morning Routine");
 		todoList.setUserId((long)1);
 		
-		TodoList savedTodoList = todoListDAO.save(todoList);
+		TaskList savedTodoList = todoListDAO.save(todoList);
 		
-		assertNotNull(savedTodoList.getId());
+		assertNotNull(savedTodoList.getListId());
 		
 	}
 }

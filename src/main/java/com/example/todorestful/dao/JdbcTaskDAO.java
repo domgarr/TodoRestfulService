@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import com.example.todorestful.model.Task;
 
 @Repository
-public class JdbcTodoDAO implements TodoDAO {
+public class JdbcTaskDAO implements TaskDAO {
 	/*
 	 * https://docs.spring.io/spring/docs/2.0.x/reference/jdbc.html
 	 * 
@@ -35,7 +35,7 @@ public class JdbcTodoDAO implements TodoDAO {
 			);
 	
 	@Autowired
-	public JdbcTodoDAO(JdbcTemplate jdbcTemplate) {
+	public JdbcTaskDAO(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 		this.jdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
 				.withTableName("todos")
