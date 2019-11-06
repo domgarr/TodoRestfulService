@@ -13,6 +13,16 @@ public class TaskList {
 	
 	public TaskList() {
 	}
+	
+	
+
+	public TaskList(Long listId, Long userId, String name) {
+		this.listId = listId;
+		this.userId = userId;
+		this.name = name;
+	}
+
+
 
 	public Long getListId() {
 		return listId;

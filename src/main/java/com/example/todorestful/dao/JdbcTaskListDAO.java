@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +19,12 @@ public class JdbcTaskListDAO implements TaskListDAO {
 	
 	private JdbcTemplate jdbcTemplate;
 	private SimpleJdbcInsert jdbcInsert;
+	
+	private RowMapper<TaskList> taskListMapper = (rs, rowNum) -> new TaskList(
+			rs.getLong("list_id"),
+			rs.getLong("user_id"),
+			rs.getString("name")
+			);
 	
 	
 	@Autowired
@@ -107,8 +114,7 @@ public class JdbcTaskListDAO implements TaskListDAO {
 
 	@Override
 	public List<TaskList> findAllByUserId(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return jdbcTemplate.query("SELECT * FROM task_list WHERE user_id =?", taskListMapper, id);
 	}
 
 
