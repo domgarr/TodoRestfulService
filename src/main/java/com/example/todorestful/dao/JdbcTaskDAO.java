@@ -38,27 +38,27 @@ public class JdbcTaskDAO implements TaskDAO {
 	public JdbcTaskDAO(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 		this.jdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
-				.withTableName("todos")
+				.withTableName("task")
 				.usingGeneratedKeyColumns("user_id");
 				
 	}
 	
 	@Override
-	public Task save(Task todo) {
+	public Task save(Task task) {
 		Map<String, Object> parameters = new HashMap<>();
-		parameters.put("description", todo.getDescription());
-		parameters.put("is_done", todo.isDone());
-		parameters.put("list_id", todo.getListId());
+		parameters.put("description", task.getDescription());
+		parameters.put("is_done", task.isDone());
+		parameters.put("list_id", task.getListId());
 	
 		Number generatedId =  jdbcInsert.executeAndReturnKey(parameters);
-		todo.setId(generatedId.longValue());
+		task.setId(generatedId.longValue());
 		
-		return todo;
+		return task;
 	}
 
 	@Override
 	public void delete(Long id) {
-		jdbcTemplate.update("DELETE FROM todos WHERE todo_id=?", id);
+		jdbcTemplate.update("DELETE FROM task WHERE todo_id=?", id);
 	}
 
 	@Override
@@ -94,20 +94,20 @@ public class JdbcTaskDAO implements TaskDAO {
 	}
 
 	@Override
-	public void updateDescription(Task todo) {
+	public void updateDescription(Task task) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateIsDone(Task todo) {
+	public void updateIsDone(Task task) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public List<Task> findAllByListId(Long id) {
-		return jdbcTemplate.query("SELECT * FROM todos WHERE list_id=?", todoMapper ,id);
+		return jdbcTemplate.query("SELECT * FROM task WHERE list_id=?", todoMapper ,id);
 	}
 	
 }
