@@ -17,7 +17,8 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 public class Task {
 	
-	@JsonProperty("taskId") //By using JSONPropery here, I can customize the field name. Without todoId would be Id
+	@JsonProperty("id") //By using JSONPropery here, I can customize the field name. Without todoId would be Id
+						//Edit, I've decided to rename id's back to id instead of taskId to follow common nomenclature.
 	private Long taskId;
 	
 	private Long listId;
@@ -82,6 +83,13 @@ public class Task {
 	public void setDone(boolean isDone) {
 		this.isDone = isDone;
 	}
+	@Override
+	public String toString() {
+		return "Task [taskId=" + taskId + ", listId=" + listId + ", description=" + description + ", isDone=" + isDone
+				+ "]";
+	}
+	
+	
 	
 	
 	

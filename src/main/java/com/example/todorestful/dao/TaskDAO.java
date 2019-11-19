@@ -18,5 +18,6 @@ public interface TaskDAO {
 	boolean existsById(Long id);
 	void updateDescription(Task task);
 	void updateIsDone(Task task);
+	void batchUpdateIsDone(List<Task> tasks);
 	List<Task> findAllByListId(Long id);
 }

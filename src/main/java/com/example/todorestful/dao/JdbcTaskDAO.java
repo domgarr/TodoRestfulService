@@ -1,12 +1,16 @@
 package com.example.todorestful.dao;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Component;
@@ -28,7 +32,7 @@ public class JdbcTaskDAO implements TaskDAO {
 	private SimpleJdbcInsert jdbcInsert;
 	
 	private RowMapper<Task> todoMapper = (rs, rowNum) -> new Task(
-			rs.getLong("todo_id"),
+			rs.getLong("id"),
 			rs.getLong("list_id"),
 			rs.getString("description"),
 			rs.getBoolean("is_done")
@@ -38,8 +42,8 @@ public class JdbcTaskDAO implements TaskDAO {
 	public JdbcTaskDAO(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 		this.jdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
-				.withTableName("task")
-				.usingGeneratedKeyColumns("user_id");
+				.withTableName("tasks")
+				.usingGeneratedKeyColumns("id");
 				
 	}
 	
@@ -58,7 +62,7 @@ public class JdbcTaskDAO implements TaskDAO {
 
 	@Override
 	public void delete(Long id) {
-		jdbcTemplate.update("DELETE FROM task WHERE todo_id=?", id);
+		jdbcTemplate.update("DELETE FROM tasks WHERE id=?", id);
 	}
 
 	@Override
@@ -68,8 +72,8 @@ public class JdbcTaskDAO implements TaskDAO {
 		 * and exception is thrown. 
 		 */
 		return Optional.ofNullable(jdbcTemplate.queryForObject(
-				"SELECT * FROM todos WHERE todo_id=?", 
-				(rs,rowNum) -> new Task( rs.getLong("todo_id"),
+				"SELECT * FROM tasks WHERE id=?", 
+				(rs,rowNum) -> new Task( rs.getLong("id"),
 					rs.getLong("list_id"),
 					rs.getString("description"),
 					rs.getBoolean("is_done")),
@@ -85,29 +89,45 @@ public class JdbcTaskDAO implements TaskDAO {
 
 	@Override
 	public long count() {
-		return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM todos", Long.class);
+		return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM tasks", Long.class);
 	}
 
 	@Override
 	public boolean existsById(Long id) {
-		return jdbcTemplate.queryForObject("SELECT EXISTS(SELECT 1 FROM todos WHERE todo_id=?)", Boolean.class, id);
+		return jdbcTemplate.queryForObject("SELECT EXISTS(SELECT 1 FROM tasks WHERE id=?)", Boolean.class, id);
 	}
 
 	@Override
 	public void updateDescription(Task task) {
-		// TODO Auto-generated method stub
-		
+		jdbcTemplate.update("UPDATE tasks SET description=? WHERE id = ?", task.getDescription(), task.getId());
 	}
 
 	@Override
-	public void updateIsDone(Task task) {
-		// TODO Auto-generated method stub
+	public void batchUpdateIsDone(List<Task> tasks) {
+		jdbcTemplate.batchUpdate("UPDATE tasks SET is_done=? WHERE id=?", new BatchPreparedStatementSetter() {
+			@Override
+			public void setValues(PreparedStatement ps, int i) throws SQLException {
+				ps.setBoolean(1, tasks.get(i).isDone());
+				ps.setLong(2, tasks.get(i).getId());
+			}
+			
+			@Override
+			public int getBatchSize() {
+				// TODO Auto-generated method stub
+				return tasks.size();
+			}
+		});
 		
 	}
 
 	@Override
 	public List<Task> findAllByListId(Long id) {
-		return jdbcTemplate.query("SELECT * FROM task WHERE list_id=?", todoMapper ,id);
+		return jdbcTemplate.query("SELECT * FROM tasks WHERE list_id=?", todoMapper ,id);
+	}
+
+	@Override
+	public void updateIsDone(Task task) {
+		 jdbcTemplate.update("UPDATE tasks SET is_done =? WHERE id=?", task.isDone(), task.getId() );
 	}
 	
 }

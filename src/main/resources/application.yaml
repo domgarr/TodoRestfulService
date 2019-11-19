@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/placeholder
+    username: test
+    password: test
+  jackson:
+    propertyNamingStrategy: LOWER_CAMEL_CASE
+      

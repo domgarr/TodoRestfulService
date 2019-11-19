@@ -5,14 +5,14 @@ import java.util.Optional;
 import com.example.todorestful.model.Task;
 import com.example.todorestful.model.TaskList;
 
-public interface TaskListDAO extends CrudRepository<TaskList> {
+public interface TaskListDAO  {
 	TaskList save(TaskList task);
 	Optional<TaskList> findById(Long id);
 	List<TaskList> findAll();
 	long count();
-	void delete(Long id);
+	void delete(Long id );
 	boolean existsById(Long id);
-	void updateName(String name);
+	void updateName(TaskList taskList);
 	List<TaskList> findAllByUserId(Long id);
 	
 }
