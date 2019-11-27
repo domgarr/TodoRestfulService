@@ -54,11 +54,7 @@ public class TodoController {
 	
 	@PutMapping("/task/is-done")
 	public void batchUpdateIsDone(@RequestBody List<Task> tasks) {
-		System.out.println(tasks.toString());
 		todoDAO.batchUpdateIsDone(tasks);
 	}
 	
-	
-	
-
 }
