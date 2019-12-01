@@ -9,3 +9,7 @@ spring:
       
 user-defined:
   allowed-origin: localhost:8080/
+  
+logging:
+  level:
+    root: debug

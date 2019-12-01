@@ -51,7 +51,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 		.addFilter(authenticationFilter)
 		.addFilter(new JwtAuthorizationFilter(authenticationManager()))
 		//Disable session creation.
-		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+		.and()
+		.exceptionHandling().accessDeniedPage("/index.html"); //If access is denied forward the user to the root directory which will either navigate the user to home or to login. 
 	}
 	
 

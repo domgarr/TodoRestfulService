@@ -60,13 +60,18 @@
 	   		 <artifactId>jjwt</artifactId>
 	   		 <version>0.9.1</version>
 		</dependency>
-				<dependency>
-		
+		<dependency>
 			<groupId>com.auth0</groupId>
             <artifactId>auth0-spring-security-api</artifactId>
             <version>1.0.0-rc.3</version>
-            		</dependency>
-            
+        </dependency>
+        <dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		    <version>1.18.10</version>
+		    <scope>provided</scope>
+		</dependency>
+        
 	</dependencies>
 	
 	<build>

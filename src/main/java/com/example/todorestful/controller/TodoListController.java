@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.todorestful.TodoRestfulApplication;
 import com.example.todorestful.dao.JdbcTaskListDAO;
 import com.example.todorestful.dao.JdbcUserDAO;
 import com.example.todorestful.dao.MyUserDetailsService;
@@ -23,7 +24,10 @@ import com.example.todorestful.model.TaskList;
 import com.example.todorestful.model.User;
 import com.example.todorestful.util.UserUtility;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
+@Slf4j
 public class TodoListController {
 	
 	private JdbcTaskListDAO todoListDAO;
@@ -48,11 +52,10 @@ public class TodoListController {
 	@GetMapping("/tasklist")
 	List<TaskList> getTaskListByUserId(){
 		User user = userUtility.getUsernameFromSecurityContextHolder();
-
 		if(user != null ) {
-			
+			log.debug(user.toString());
 			List<TaskList> list = todoListDAO.findAllByUserId(user.getId());
-			System.out.print(list.toString());
+
 			return list;
 		}
 		
@@ -67,7 +70,6 @@ public class TodoListController {
 	
 	@PutMapping("/tasklist")
 	public void updateTaskList(@RequestBody TaskList taskList) {
-		System.out.println(taskList.getListId());
 		todoListDAO.updateName(taskList);
 	}
 	
