@@ -75,21 +75,58 @@
 	</dependencies>
 	
 	<build>
-  <plugins>
-    <plugin>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-maven-plugin</artifactId>
-      <version>2.2.1.RELEASE</version>
-      <executions>
-        <execution>
-          <goals>
-            <goal>repackage</goal>
-          </goals>
-        </execution>
-      </executions>
-    </plugin>
-  </plugins>
-</build>
+		<plugins>
+		
+		<plugin>
+	            <groupId>com.github.eirslett</groupId>
+	            <artifactId>frontend-maven-plugin</artifactId>
+	            <version>1.6</version>
+	
+	            
+	            <configuration>
+	            	<workingDirectory>
+	            		client/listify-client
+	            	</workingDirectory>
+	            </configuration>
+				
+				<executions>
+                <execution>
+                    <id>install node and npm</id>
+                    <goals>
+                        <goal>install-node-and-npm</goal>
+                    </goals>
+                    <phase>generate-resources</phase>
+                    <configuration>
+                        <nodeVersion>v 13.2.0</nodeVersion>
+                        <npmVersion>6.13.1</npmVersion>                      
+                    </configuration>                        
+                </execution>
+                <execution>
+                        <id>npm install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <!-- Optional configuration which provides for running any npm command -->
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
+                 </execution>
+                 <execution>
+                     <id>prod</id>
+                     <goals>
+                       <goal>npm</goal>
+                     </goals>
+                     <configuration>
+                       <arguments>run-script build-prod</arguments>
+                     
+                     </configuration>
+                     <phase>generate-resources</phase>
+                  </execution>                                                      
+            </executions>
+	        </plugin>
+	        </plugins>
+	</build>
+
 	
 	
 </project>
