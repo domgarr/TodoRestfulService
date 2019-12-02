@@ -39,7 +39,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 		.antMatchers(HttpMethod.POST, SecurityConstants.SIGN_UP_URL).permitAll()
 		.antMatchers(HttpMethod.POST, "/login").permitAll()
-		.antMatchers(HttpMethod.GET, "/users/user").permitAll()		
+		.antMatchers(HttpMethod.GET, "/users/user").permitAll() //Create new user URL.
 		.antMatchers(HttpMethod.GET, "/").permitAll() 		//Permit the index file?		
 		.antMatchers(HttpMethod.GET,"/*.*.js").permitAll()
 		.antMatchers(HttpMethod.GET,"/*.*.css").permitAll()
