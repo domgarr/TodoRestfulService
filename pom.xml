@@ -75,6 +75,8 @@
 	</dependencies>
 	
 	<build>
+		        <defaultGoal>springboot-run</defaultGoal>
+	
 		<plugins>
 		
 		<plugin>
@@ -97,7 +99,7 @@
                     </goals>
                     <phase>generate-resources</phase>
                     <configuration>
-                        <nodeVersion>v 13.2.0</nodeVersion>
+                        <nodeVersion>v13.2.0</nodeVersion>
                         <npmVersion>6.13.1</npmVersion>                      
                     </configuration>                        
                 </execution>
