@@ -114,16 +114,6 @@
                         </configuration>
                  </execution>
                  <execution>
-                        <id>npm init</id>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <!-- Optional configuration which provides for running any npm command -->
-                        <configuration>
-                            <arguments>init</arguments>
-                        </configuration>
-                 </execution>
-                 <execution>
                      <id>prod</id>
                      <goals>
                        <goal>npm</goal>
