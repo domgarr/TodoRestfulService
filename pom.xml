@@ -119,7 +119,7 @@
                        <goal>npm</goal>
                      </goals>
                      <configuration>
-                       <arguments>run-script build-prod</arguments>
+                       <arguments>run build-prod</arguments>
                      
                      </configuration>
                      <phase>generate-resources</phase>
