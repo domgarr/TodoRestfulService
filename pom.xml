@@ -75,11 +75,11 @@
 	</dependencies>
 	
 	<build>
-		        <defaultGoal>springboot-run</defaultGoal>
+		<defaultGoal>springboot-run</defaultGoal>
 	
 		<plugins>
 		
-		<plugin>
+			<plugin>
 	            <groupId>com.github.eirslett</groupId>
 	            <artifactId>frontend-maven-plugin</artifactId>
 	            <version>1.6</version>
@@ -114,6 +114,16 @@
                         </configuration>
                  </execution>
                  <execution>
+                        <id>npm init</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <!-- Optional configuration which provides for running any npm command -->
+                        <configuration>
+                            <arguments>init</arguments>
+                        </configuration>
+                 </execution>
+                 <execution>
                      <id>prod</id>
                      <goals>
                        <goal>npm</goal>
@@ -126,7 +136,7 @@
                   </execution>                                                      
             </executions>
 	        </plugin>
-	        </plugins>
+		</plugins>
 	</build>
 
 	
