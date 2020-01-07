@@ -3,8 +3,6 @@ package com.example.todorestful.dao;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.repository.CrudRepository;
-
 import com.example.todorestful.model.Task;
 
 public interface TaskDAO {

@@ -5,6 +5,9 @@ spring:
     password: ${JDBC_DATABASE_PASSWORD}
   jackson:
     propertyNamingStrategy: LOWER_CAMEL_CASE
+  data:
+    jpa:
+      repositories: enabled=false
       
       
 user-defined:

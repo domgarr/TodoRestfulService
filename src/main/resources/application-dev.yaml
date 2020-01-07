@@ -1,12 +1,15 @@
 spring:
   datasource:
-    url: ${JDBC_DATABASE_URL}
-    username: ${JDBC_DATABASE_USERNAME}
-    password: ${JDBC_DATABASE_PASSWORD}
+    url: ${db_url}
+    username: ${db_username}
+    password: ${db_password}
+    driverClassName: com.mysql.jdbc.Driver
+  data:
+    jpa:
+      repositories: enabled=false
   jackson:
-    propertyNamingStrategy: LOWER_CAMEL_CASE
-      
-      
+      propertyNamingStrategy: LOWER_CAMEL_CASE
+    
 user-defined:
   allowed-origin: localhost:8080/
   

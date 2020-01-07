@@ -2,7 +2,6 @@ package com.example.todorestful.dao;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.todorestful.model.Task;
 import com.example.todorestful.model.TaskList;
 
 public interface TaskListDAO  {
