@@ -126,21 +126,37 @@
                   </execution>                                                      
             </executions>
 	        </plugin>
-	       
-	     <plugin>
-	      <!-- Build an executable JAR -->
-	      <groupId>org.apache.maven.plugins</groupId>
-	      <artifactId>maven-jar-plugin</artifactId>
-	      <configuration>
-	        <archive>
-	          <manifest>
-	            <addClasspath>true</addClasspath>
-	            <classpathPrefix>lib/</classpathPrefix>
-	            <mainClass>com.example.todorestful.TodoRestfulApplication</mainClass>
-	          </manifest>
-	        </archive>
-	      </configuration>
-	    </plugin>
+		      <!--  https://jinahya.wordpress.com/2014/05/22/executable-jar-with-apache-maven/ -->
+		    <plugin>
+				  <groupId>org.apache.maven.plugins</groupId>
+				  <artifactId>maven-dependency-plugin</artifactId>
+				  <executions>
+				    <execution>
+				      <phase>package</phase>
+				      <goals>
+				        <goal>copy-dependencies</goal>
+				      </goals>
+				      <configuration>
+				        <outputDirectory>${project.build.directory}/${project.build.finalName}.lib</outputDirectory>
+				        <includeScope>runtime</includeScope>
+				      </configuration>
+				    </execution>
+				  </executions>
+			 </plugin>
+		     <plugin>
+		      <!-- Build an executable JAR -->
+		      <groupId>org.apache.maven.plugins</groupId>
+		      <artifactId>maven-jar-plugin</artifactId>
+		      <configuration>
+			      <archive>
+			        <manifest>
+			          <addClasspath>true</addClasspath>
+			          <classpathPrefix>${project.build.finalName}.lib/</classpathPrefix>
+			          <mainClass>com.example.todorestful.TodoRestfulApplication</mainClass>
+			        </manifest>
+			      </archive>
+		      </configuration>
+		    </plugin>
 		</plugins>
 	</build>
 </project>
