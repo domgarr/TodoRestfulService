@@ -53,7 +53,6 @@ public class TodoListController {
 	List<TaskList> getTaskListByUserId(){
 		User user = userUtility.getUsernameFromSecurityContextHolder();
 		if(user != null ) {
-			log.debug(user.toString());
 			List<TaskList> list = todoListDAO.findAllByUserId(user.getId());
 
 			return list;
