@@ -23,8 +23,5 @@ public class TodoRestfulApplication {
 	@Bean
 	BCryptPasswordEncoder bCryptPasswordEncoder(){
 		return new BCryptPasswordEncoder(12);
-		
 	}
-	
-	
 }
